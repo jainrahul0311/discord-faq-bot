@@ -2,17 +2,21 @@ package com.discord.faq_bot.event;
 
 import com.discord.faq_bot.CommandRepository;
 import com.discord.faq_bot.CustomCommand;
+import discord4j.core.object.Embed;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
+import discord4j.discordjson.json.EmbedData;
 import discord4j.discordjson.json.MessageData;
 import discord4j.rest.entity.RestChannel;
 import discord4j.rest.entity.RestMessage;
+import discord4j.rest.util.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -91,10 +95,14 @@ public abstract class MessageListener {
                 }
 
                 if (resp.length() != 0){
-                    return eventMessage
-                            .getRestChannel()
-                            .createMessage(resp)
-                            .then();
+                    String finalResp = resp;
+                    logger.error("Embeeded will be executed!!");
+
+                    return eventMessage.getChannel().map(messageChannel -> messageChannel.createEmbed(spec -> spec.setColor(Color.GREEN)
+                            .setAuthor("F.A.Q - BOT","","https://www.cookwithmanali.com/wp-content/uploads/2018/04/Vada-Pav.jpg")
+                            .setImage("https://www.cookwithmanali.com/wp-content/uploads/2018/04/Vada-Pav.jpg")
+                            .setDescription(finalResp)
+                            .setTimestamp(Instant.now()))).then();
                 }
 
                 /*if(content.contains("hi")){
