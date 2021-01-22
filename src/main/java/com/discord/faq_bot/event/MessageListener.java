@@ -49,11 +49,13 @@ public abstract class MessageListener {
                 logger.info("All Message in Repo : " + all.size());
 
                 if(content.contains("!list-cmd")){
+                    resp = "Special Non-Removable Commands are : \n!add-cmd\n!rm-cmd\n";
                     resp = all.stream().map(CustomCommand::getIdentifier).collect(Collectors.joining("\n"));
                     if(resp.length()>0){
-                        resp = "List of available commands are : \n" + resp;
+                        resp += "List of available commands are : \n" + resp;
                     }
                 }else if(content.startsWith("!add-cmd")){
+
                     String[] splittedContent = content.split(" ");
                     if(splittedContent[0].equals("!add-cmd") && splittedContent.length >3){
                         String identifier = splittedContent[1].toLowerCase();
@@ -76,9 +78,9 @@ public abstract class MessageListener {
                         if(cmdList.size()>0){
                             CustomCommand customCommand = cmdList.get(0);
                             commandRepository.delete(customCommand);
-                            resp = identifier + "Command was removed Successfully";
+                            resp = identifier + " Command was removed Successfully";
                         }else {
-                            resp = "No existing command found with name : "+identifier;
+                            resp = "No existing Command found with name : "+identifier;
                         }
                     }else{
                         resp = "For using !rm-cmd Command message should be in below format \n !rm-cmd <trigger_name>";
@@ -110,7 +112,6 @@ public abstract class MessageListener {
 
                 if (resp.length() != 0){
                     String finalResp = resp;
-                    logger.error("Embeeded will be executed!!");
 
                     return Mono.just(eventMessage)
                             .flatMap(Message::getChannel)
@@ -122,32 +123,10 @@ public abstract class MessageListener {
                                     )
                             ).then();
                 }
-
-                /*if(content.contains("hi")){
-                    return eventMessage
-                            .getRestChannel()
-                            .createMessage("Hi Bye Chodiye !! Vada ki Jai Boliye :p")
-                            .then();
-
-                }else if( content.contains("join") && content.contains("clan")){
-                    return eventMessage
-                            .getRestChannel()
-                            .createMessage("Ahh of course you can join our clan first sub to <@!731395055839084604> YT channel??")
-                            .then();
-                }else if( content.contains("!list-cmds")){
-
-                }*/
-
             }
         }
 
         return Mono.empty();
-        /*return Mono.just(eventMessage)
-                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().contains("joidasn") && message.getContent().contains("sda"))
-                .flatMap(Message::getChannel)
-                .flatMap(channel -> channel.createMessage("<@521994349265813514> Bot is OP !! <@!731395055839084604> Server OooPee"))
-                .then();*/
     }
 
 }
