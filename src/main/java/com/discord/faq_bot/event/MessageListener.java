@@ -55,7 +55,7 @@ public abstract class MessageListener {
                         resp = "List of available Custom commands are : \n" + resp;
                     }
                     resp = tempResp + resp;
-                }else if(content.startsWith("!add-cmd")){
+                }else if(content.contains("!add-cmd")){
 
                     String[] splittedContent = content.split(" ");
                     if(splittedContent[0].equals("!add-cmd") && splittedContent.length >3){
@@ -71,7 +71,7 @@ public abstract class MessageListener {
                     }else{
                         resp = "For using !add cmd message should be in below format \n !add <trigger_name> <message>";
                     }
-                }else if(content.startsWith("!rm-cmd")){
+                }else if(content.contains("!rm-cmd")){
                     String[] splittedContent = content.split(" ");
                     if(splittedContent[0].equals("!rm-cmd") && splittedContent.length == 2){
                         String identifier = splittedContent[1].toLowerCase();
