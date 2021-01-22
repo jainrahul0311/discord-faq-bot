@@ -68,8 +68,22 @@ public abstract class MessageListener {
                     }else{
                         resp = "For using !add cmd message should be in below format \n !add <trigger_name> <message>";
                     }
+                }else if(content.startsWith("!rm-cmd")){
+                    String[] splittedContent = content.split(" ");
+                    if(splittedContent[0].equals("!rm-cmd") && splittedContent.length == 2){
+                        String identifier = splittedContent[1].toLowerCase();
+                        List<CustomCommand> cmdList = commandRepository.getByIdentifierEquals(identifier);
+                        if(cmdList.size()>0){
+                            CustomCommand customCommand = cmdList.get(0);
+                            commandRepository.delete(customCommand);
+                            resp = identifier + "Command was removed Successfully";
+                        }else {
+                            resp = "No existing command found with name : "+identifier;
+                        }
+                    }else{
+                        resp = "For using !rm-cmd Command message should be in below format \n !rm-cmd <trigger_name>";
+                    }
                 }else{
-
                     int i = content.indexOf(" ");
                     if(i != -1){
                         Set<String> dbIdentifier = all.stream().map(CustomCommand::getIdentifier).collect(Collectors.toSet());
