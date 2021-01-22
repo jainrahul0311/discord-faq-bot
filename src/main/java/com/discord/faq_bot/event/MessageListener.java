@@ -98,11 +98,15 @@ public abstract class MessageListener {
                     String finalResp = resp;
                     logger.error("Embeeded will be executed!!");
 
-                    return eventMessage.getChannel().map(messageChannel -> messageChannel.createEmbed(spec -> spec.setColor(Color.GREEN)
-                            .setAuthor("F.A.Q - BOT","","https://www.cookwithmanali.com/wp-content/uploads/2018/04/Vada-Pav.jpg")
-                            .setImage("https://www.cookwithmanali.com/wp-content/uploads/2018/04/Vada-Pav.jpg")
-                            .setDescription(finalResp)
-                            .setTimestamp(Instant.now()))).then();
+                    return Mono.just(eventMessage)
+                            .flatMap(Message::getChannel)
+                            .flatMap(channel -> channel.createEmbed(
+                                    spec -> spec.setColor(Color.GREEN)
+                                            .setAuthor("F.A.Q - BOT","","https://www.cookwithmanali.com/wp-content/uploads/2018/04/Vada-Pav.jpg")
+                                            .setDescription("`"+finalResp+"`")
+                                            .setTimestamp(Instant.now())
+                                    )
+                            ).then();
                 }
 
                 /*if(content.contains("hi")){
