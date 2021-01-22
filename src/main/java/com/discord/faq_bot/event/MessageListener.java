@@ -27,6 +27,8 @@ public abstract class MessageListener {
     public Mono<Void> processCommand(Message eventMessage) {
 
         Optional<User> author = eventMessage.getAuthor();
+        try{
+
         String content = eventMessage.getContent().toLowerCase();
 
         if (author.isPresent()) {
@@ -121,6 +123,10 @@ public abstract class MessageListener {
             }
         }
 
+        }catch (Exception e){
+            logger.error("Exception inside MessageListener");
+            e.printStackTrace();
+        }
         return Mono.empty();
     }
 
