@@ -49,11 +49,12 @@ public abstract class MessageListener {
                 logger.info("All Message in Repo : " + all.size());
 
                 if(content.contains("!list-cmd")){
-                    resp = "Special Non-Removable Commands are : \n!add-cmd\n!rm-cmd\n";
+                    String tempResp = "Special Non-Removable Commands are : \n!add-cmd\n!rm-cmd\n";
                     resp = all.stream().map(CustomCommand::getIdentifier).collect(Collectors.joining("\n"));
                     if(resp.length()>0){
                         resp += "List of available commands are : \n" + resp;
                     }
+                    resp = tempResp + resp;
                 }else if(content.startsWith("!add-cmd")){
 
                     String[] splittedContent = content.split(" ");
