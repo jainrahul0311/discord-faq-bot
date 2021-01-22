@@ -31,16 +31,13 @@ public abstract class MessageListener {
 
         if (author.isPresent()) {
             User user = author.get();
-            logger.info("Message Owner ID " + user.getId());
-            logger.info("Mention : " + user.getMention());
+            logger.info("Message : "+ content);
 
             if (!user.isBot()) {
 
                 String resp = "";
 
                 List<CustomCommand> all = commandRepository.findAll();
-
-                logger.info("All Message in Repo : " + all.size());
 
                 if (content.contains("!list-cmd")) {
                     String tempResp = "Special Non-Removable Commands are : \n\n!add-cmd\n!rm-cmd\n\n";

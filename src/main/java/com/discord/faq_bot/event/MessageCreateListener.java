@@ -12,7 +12,6 @@ public class MessageCreateListener extends MessageListener implements EventListe
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public Class<MessageCreateEvent> getEventType() {
-        logger.info("Inside Get Event Type");
         return MessageCreateEvent.class;
     }
 
