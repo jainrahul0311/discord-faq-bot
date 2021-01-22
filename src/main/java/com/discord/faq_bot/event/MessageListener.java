@@ -92,7 +92,7 @@ public abstract class MessageListener {
                                 resp = customCommand.getMessage();
                             }
                         }
-                    } else {
+                    } else if(content.length()!=0){
                         Set<String> dbIdentifier = all.stream().map(CustomCommand::getIdentifier).collect(Collectors.toSet());
                         for (String s : dbIdentifier) {
                             if (s.contains(content.toLowerCase())) {
@@ -124,7 +124,7 @@ public abstract class MessageListener {
         }
 
         }catch (Exception e){
-            logger.error("Exception inside MessageListener");
+            logger.error("Exception inside MessageListener : " + e.getMessage());
             e.printStackTrace();
         }
         return Mono.empty();
