@@ -49,10 +49,10 @@ public abstract class MessageListener {
                 logger.info("All Message in Repo : " + all.size());
 
                 if(content.contains("!list-cmd")){
-                    String tempResp = "Special Non-Removable Commands are : \n\n!add-cmd\n!rm-cmd\n";
+                    String tempResp = "Special Non-Removable Commands are : \n\n!add-cmd\n!rm-cmd\n\n";
                     resp = all.stream().map(CustomCommand::getIdentifier).collect(Collectors.joining("\n"));
                     if(resp.length()>0){
-                        resp = "List of available Custom commands are : \n\n" + resp;
+                        resp = "List of Custom Commands are : \n\n" + resp;
                     }
                     resp = tempResp + resp;
                 }else if(content.contains("!add-cmd")){
