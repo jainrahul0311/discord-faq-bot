@@ -10,6 +10,10 @@ jobs:
   run-fastscan:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+        
       - name: Checkout code
         uses: actions/checkout@v2
 
